@@ -1,0 +1,32 @@
+{
+  "name": "edunation",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000E\u0000d\u0000u\u0000N\u0000a\u0000t\u0000i\u0000o\u0000n\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaurabhTomer/EduNation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SaurabhTomer/EduNation/issues"
+  },
+  "homepage": "https://github.com/SaurabhTomer/EduNation#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.1",
+    "nodemailer": "^7.0.9",
+    "nodemon": "^3.1.10",
+    "otp-generator": "^4.0.1"
+  }
+}

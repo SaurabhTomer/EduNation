@@ -157,6 +157,7 @@ exports.login = async (req, res) => {
         accountType: user.accountType,
       };
 
+      //this payload comes in mddlewares in access role
       const token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: "2h",
       });
@@ -187,10 +188,6 @@ exports.login = async (req, res) => {
 };
 
 //change password
-import bcrypt from "bcryptjs";
-import userModel from "../models/user.models.js";
-import mailSender from "../utils/mailSender.js";
-
 export const changePassword = async (req, res) => {
   try {
     // 1️⃣ Get data from req body

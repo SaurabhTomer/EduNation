@@ -29,6 +29,7 @@ exports.resetPasswordToken = async (req, res) => {
       { token: token, resetPasswordExpires: Date.now() + 5 * 60 * 1000 },
       { new: true } //retrun updated document
     );
+
     //craete url
     // this is a frontend url
     const url = `http://localhost:3000/update-password/${token}`;
@@ -46,9 +47,9 @@ exports.resetPasswordToken = async (req, res) => {
       message:
         "Email sent Successfully  ,Please check email and change password ",
     });
+
   } catch (error) {
     console.log(error);
-
     return res
       .status(500)
       .json({ success: false, message: "Reset password link sent error" });
@@ -95,7 +96,6 @@ exports.resetPassword = async(req,res) => {
 
   } catch (error) {
     console.log(error);
-    return res.status(400).json({success:false,message:"Token reset error"})
-    
+    return res.status(400).json({success:false,message:"Token reset error"})  
   }
 }

@@ -1,12 +1,9 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import jwt from 'jsonwebtoken';
-import User from '../models/user.models.js'
 
 
 //auth
-import jwt from "jsonwebtoken";
-
 export const auth = async (req, res, next) => {
   try {
     //  Extract token from cookie, body, or header

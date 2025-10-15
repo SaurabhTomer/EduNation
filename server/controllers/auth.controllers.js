@@ -4,6 +4,7 @@ import User from "../models/user.models.js";
 import OTP from "../models/otp.models.js";
 import Profile from "../models/profile.models.js";
 import jwt from "jsonwebtoken";
+import mailSender from '../utils/mailSender.js'
 
 //send otp
 exports.sendOTP = async (req, res) => {

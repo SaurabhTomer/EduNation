@@ -40,6 +40,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  token: { // going to used in reset password token 
+    type: String,
+  },
+  resetPasswordExpires: {
+    type: Date,
+  },
   courseProgress: [
     {
       type: mongoose.Schema.Types.Array.ObjectId,
@@ -48,4 +54,4 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-export default mongoose.model("User" , userSchema);
+export default mongoose.model("User", userSchema);

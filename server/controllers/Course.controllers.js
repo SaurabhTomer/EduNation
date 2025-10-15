@@ -1,3 +1,4 @@
+import { populate } from "dotenv";
 import Course from "../models/course.models.js";
 import Tag from "../models/tags.models.js";
 import User from "../models/user.models.js";
@@ -93,8 +94,6 @@ exports.createCourse = async (req, res) => {
       message: "Course created successfully",
       data: newCourse,
     });
-
-    
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -102,5 +101,40 @@ exports.createCourse = async (req, res) => {
       message: "Failed to create course",
       error: error.message,
     });
+  }
+};
+
+//get all courses
+exports.showAllCourses = async (req, res) => {
+  try {
+
+    //get all courses of particluar instaructor
+    const allCourses = await Course.find(
+      {},
+      {
+        courseName: true,
+        price: true,
+        instructor: true,
+        thumbnail: true,
+        ratingAndReview: true,
+        studentsEnrolled: true,
+      }
+    ).populate("instructor").exec();
+    
+    //retur response
+    return res.status(200).json({success:true,
+        message:"Data fetch successfully",
+        data : allCourses,
+    })
+
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({
+        success: false,
+        message: "cannot fetch course data",
+        error: error.message,
+      });
   }
 };

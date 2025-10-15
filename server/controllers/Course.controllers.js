@@ -1,6 +1,6 @@
-import { populate } from "dotenv";
+
 import Course from "../models/course.models.js";
-import Tag from "../models/tags.models.js";
+import Category from "../models/category.models.js";
 import User from "../models/user.models.js";
 import { uploadImageToCloudinary } from "../utils/imageUpload.js";
 
@@ -10,7 +10,7 @@ exports.createCourse = async (req, res) => {
   try {
     //fetch data
     //here tag id is passed because its ref is stored in course model
-    const { courseName, courseDescription, whatYouWillLearn, price, tag } =
+    const { courseName, courseDescription, whatYouWillLearn, price, Category } =
       req.body;
 
     //get thumbnail
@@ -22,7 +22,7 @@ exports.createCourse = async (req, res) => {
       !courseDescription ||
       !whatYouWillLearn ||
       !price ||
-      !tag
+      !Category
     ) {
       return res
         .status(400)
@@ -43,9 +43,9 @@ exports.createCourse = async (req, res) => {
     }
 
     //check given tag is valid or not
-    const tagDetails = await Tag.findById({ tag });
-    if (!tagDetails) {
-      return res.status(400).json({ success: false, message: "tag not found" });
+    const categoryDetails = await Tag.findById({ Category });
+    if (!categoryDetails) {
+      return res.status(400).json({ success: false, message: "category not found" });
     }
 
     //uplaod image to cloudinary
@@ -61,7 +61,7 @@ exports.createCourse = async (req, res) => {
       instructor: instructorDetails._id,
       whatYouWillLearn,
       price,
-      tag: tagDetails._id,
+      category: categoryDetails._id,
       thumbnail: thumbnailImage.secure_url,
       //secure url comes from thumnailImage after uplaoding thumbnail on cloudinary
     });
@@ -79,10 +79,10 @@ exports.createCourse = async (req, res) => {
 
     //update tag schema
     await Course.findByIdAndUpdate(
-      { id: tagDetails._id },
+      { id: categoryDetails._id },
       {
         $push: {
-          tag: tagDetails._id,
+          category: categoryDetails._id,
         },
       },
       { new: true }

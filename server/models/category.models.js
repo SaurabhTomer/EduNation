@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-// tags are like python , html  means course names
-const tagsSchema = new mongoose.Schema({
+
+const categorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -20,4 +20,4 @@ const tagsSchema = new mongoose.Schema({
   ],
 });
 
-export default mongoose.model("Tag", tagsSchema);
+export default mongoose.model("Category", categorySchema);

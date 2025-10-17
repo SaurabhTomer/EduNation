@@ -3,7 +3,7 @@ import Section from "../models/section.models.js";
 import uploadImageToCloudinary from "../utils/imageUpload.js";
 
 //create sub section
-export const updateSubSection = async (req, res) => {
+export const createSubSection = async (req, res) => {
   try {
     //fetch data from body
     const { sectionId, title, description, timeDuration } = req.body;
@@ -42,7 +42,7 @@ export const updateSubSection = async (req, res) => {
       .populate("subSection") //  populate all subSections
       .exec();
 
-    console.log("Updated Section (with populated subSections):", updatedSection);
+    console.log("Updated Section :", updatedSection);
 
     //return response
     return res.status(201).json({
@@ -50,7 +50,7 @@ export const updateSubSection = async (req, res) => {
       message: "Subsection created successfully",
       data: updatedSection,
     });
-    
+
   } catch (error) {
     console.error("Error while creating subsection:", error);
     return res.status(500).json({

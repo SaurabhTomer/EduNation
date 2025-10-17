@@ -46,7 +46,7 @@ exports.updateSection = async (req, res) => {
     const { sectionName, sectionId } = req.body;
 
     //valiadtion
-    if ( !sectionName || !sectionId ) {
+    if (!sectionName || !sectionId) {
       return res
         .status(400)
         .json({ success: false, message: "Fields are required" });
@@ -69,6 +69,37 @@ exports.updateSection = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "section is not updated",
+      error: error.message,
+    });
+  }
+};
+
+//delete section
+exports.deleteSection = async (req, res) => {
+  try {
+    // get id that is send in params
+    const { sectionId } = req.params;
+
+    //validate
+    if (!sectionId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Id are required" });
+    }
+
+    //find by  id and delete
+    await Section.findByIdAndDelete(sectionId);
+
+    //retrun response
+    return res
+      .status(500)
+      .json({ success: true, message: "section is deleted successfully" });
+
+      
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "section is not deleted",
       error: error.message,
     });
   }

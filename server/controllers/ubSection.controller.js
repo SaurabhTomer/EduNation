@@ -60,3 +60,60 @@ export const createSubSection = async (req, res) => {
     });
   }
 };
+
+
+//update sub section 
+export const updateSubSection = async (req, res) => {
+  try {
+    //fetch data from body
+    const { subSectionId, title, description, timeDuration } = req.body;
+
+    //extract file/video
+    const video = req.files.videoFile;
+
+    //validate data
+    if (!subSectionId || !title || !description || !timeDuration || !video) {
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields are required" });
+    }
+
+    //upload video to cloudinary and get secure url
+    const uploadDetails = await uploadImageToCloudinary(video, process.env.FOLDER_NAME);
+
+
+    //update subsection id in in sub section
+    const updatedSubSection = await subSection.findByIdAndUpdate(
+      subSectionId,
+      {
+        title:title,
+        description:description,
+        timeDuration:timeDuration,
+        videoUrl:uploadDetails.secure_url,
+      },
+      { new: true }
+    )
+      
+
+    console.log("Updated subsection :", updatedSubSection);
+
+    //return response
+    return res.status(201).json({
+      success: true,
+      message: "Subsection upddated successfully",
+ 
+     
+    });
+
+  } catch (error) {
+    console.error("Error while updating subsection:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Subsection could not be updated",
+      error: error.message,
+    });
+  }
+};
+
+
+//delete sub section

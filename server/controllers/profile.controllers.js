@@ -6,8 +6,13 @@ import User from "../models/user.models.js";
 exports.updatedProfile = async (req, res) => {
   try {
     //fetch user  id and data
-    const {dateOfBirth ="" , about="" , contactNumber="" , gender} = req.body;
-    const id  = req.user.id;
+    const {
+      dateOfBirth = "",
+      about = "",
+      contactNumber = "",
+      gender,
+    } = req.body;
+    const id = req.user.id;
 
     //validate
     if (!userId) {
@@ -28,21 +33,18 @@ exports.updatedProfile = async (req, res) => {
     profileDetails.dateOfBirth = dateOfBirth;
     profileDetails.contactNumber = contactNumber;
     profileDetails.gender = gender;
-    profileDetails.about  = about;
-
+    profileDetails.about = about;
 
     //save details in db
     await profileDetails.save();
 
     //return response
-   
+
     return res.status(200).json({
       success: true,
       message: "profile created successfully",
       profileDetails,
     });
-
-
   } catch (error) {
     console.error("Error while updating profile:", error);
     return res.status(500).json({
@@ -50,5 +52,32 @@ exports.updatedProfile = async (req, res) => {
       message: "Error while updating profile",
       error: error.message,
     });
+  }
+};
+
+//delet account
+exports.deleteAccount = async (req, res) => {
+  try {
+    //get id
+    const id = req.user.id;
+
+    //validate user
+    const userDetails = await User.findById(id);
+    if (!userDetails) {
+      return res
+        .status(400)
+        .json({ success: false, message: "user not found" });
+    }
+    //delete profile
+    await Profile.findByIdAndDelete({ _id: userDetails.additionalDetails });
+    //delet user
+    await User.findByIdAndDelete({ _id: id });
+    //retrun response
+    return res.status(200).json({ success: true, message: "user deleted" });
+    
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "user deletion error" });
   }
 };

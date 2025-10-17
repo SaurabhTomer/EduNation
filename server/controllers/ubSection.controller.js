@@ -3,7 +3,7 @@ import Section from "../models/section.models.js";
 import uploadImageToCloudinary from "../utils/imageUpload.js";
 
 //create sub section
-export const createSubSection = async (req, res) => {
+exports.createSubSection = async (req, res) => {
   try {
     //fetch data from body
     const { sectionId, title, description, timeDuration } = req.body;
@@ -63,7 +63,7 @@ export const createSubSection = async (req, res) => {
 
 
 //update sub section 
-export const updateSubSection = async (req, res) => {
+exports.updateSubSection = async (req, res) => {
   try {
     //fetch data from body
     const { subSectionId, title, description, timeDuration } = req.body;
@@ -117,3 +117,39 @@ export const updateSubSection = async (req, res) => {
 
 
 //delete sub section
+exports.deleteSubSection = async (req, res) => {
+  try {
+    const { subSectionId } = req.body;
+
+    if (!subSectionId) {
+      return res.status(400).json({
+        success: false,
+        message: "SubSection ID is required",
+      });
+    }
+
+    // Delete the subsection
+    const deletedSubSection = await subSection.findByIdAndDelete(subSectionId);
+
+    if (!deletedSubSection) {
+      return res.status(404).json({
+        success: false,
+        message: "SubSection not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "SubSection deleted successfully",
+      data: deletedSubSection,
+    });
+
+  } catch (error) {
+    console.error("Error while deleting subsection:", error);
+    return res.status(500).json({
+      success: false,
+      message: "SubSection could not be deleted",
+      error: error.message,
+    });
+  }
+};

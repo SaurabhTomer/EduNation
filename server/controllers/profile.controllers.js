@@ -74,10 +74,33 @@ exports.deleteAccount = async (req, res) => {
     await User.findByIdAndDelete({ _id: id });
     //retrun response
     return res.status(200).json({ success: true, message: "user deleted" });
-    
   } catch (error) {
     return res
       .status(500)
       .json({ success: false, message: "user deletion error" });
+  }
+};
+
+//get all user
+exports.getAllUserDetails = async (req, res) => {
+  try {
+
+    //get id
+    const id = req.user.id;
+
+    //valiadtion and user details
+    const userDetails = await User.findById(id)
+      .populate("additionalDetails")
+      .exec();
+
+    //return response
+    return res
+      .status(200)
+      .json({ success: true, message: "user data fetch successfully" });
+      
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "user details getting  error" });
   }
 };

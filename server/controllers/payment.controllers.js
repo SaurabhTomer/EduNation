@@ -5,7 +5,7 @@ import mailSender from "../utils/mailSender.js";
 import { courseEnrollmentEmail } from "../mails/templates/courseEnrollment.js";
 import mongoose from "mongoose";
 
-//capture  the payment and it\\nitiate the razorpay order
+//capture  the payment and initiate the razorpay order
 exports.capturePayment = async (req, res) => {
   try {
     //get course id and user id
@@ -86,7 +86,7 @@ exports.capturePayment = async (req, res) => {
   }
 };
 
-//verify signature or  razoorpay and server
+//verify signature or  razorpay and server
 exports.verifySignature = async (req, res) => {
   try {
     //signature send by server

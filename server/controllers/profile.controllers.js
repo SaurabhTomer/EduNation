@@ -1,7 +1,7 @@
 import Profile from "../models/profile.models.js";
 import User from "../models/user.models.js";
 
-//we are not creating profile we already craete profile with null value in user
+//we are not creating profile we already create profile with null value in user
 
 exports.updatedProfile = async (req, res) => {
   try {
